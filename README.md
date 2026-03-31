@@ -1,16 +1,18 @@
 # DS 4320 Project 1: Breaking the Filter Bubble, A Diversity-Aware Movie Recommendation System
 
 ## Executive Summary
+This repository contains materials necessary for running DS 4320 Project 1. The project addresses the problem of filter bubbles in content recommendation systems, which is the tendency of algorithms to progressively narrow the diversity of content shown to users over repeated recommendation cycles. Using both the MovieLens 100K and MovieLens 1M datasets, the project builds a seven-table relational database (ratings, movies, users, genres, ratings_1m, movies_1m, users_1m), implements a user based collaborative filtering recommender system in Python with DuckDB for data management, evaluates a MMR diversity of re-ranking layer that measurably reduces filter bubble formation while preserving recommendation quality. The pipeline shows that a lightweight post processing diversity intervention can reduce content narrowing without rebuilding the underlying algorithm from scratch. 
 
-This repository contains materials necessary for running DS 4320 Project 1. The project addresses the problem of filter bubbles in content recommendation systems, which is the tendency of algorithms to progressively narrow the diversity of content shown to users over repeated recommendation cycles. Using the MovieLens 100K dataset, the project builds a four-table relational database (ratings, movies, users, genres), implements a user based collaborative filtering recommender system in Python with DuckDB for data management, evaluates a MMR diversity of re-ranking layer that measurably reduces filter bubble formation while preserving recommendation quality. The pipeline shows that a lightweight post processing diversity intervention can reduce content narrowing without rebuilding the underlying algorithm from scratch. 
 
 **Name:** Yuthi Madireddy
 **Computing ID:** hva4zb
 **DOI:**
-**License:**
+**License:** MIT — see [LICENSE](./LICENSE)
 
 ## Links:
 Data (One_Drive Link): https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge
+Data (Github Link): [data/](./data/)
+Pipeline: [pipeline/pipeline.ipynb](./pipeline/pipeline.ipynb)
 
 Press Release: [press_release.md](./press_release.md)
 
@@ -53,7 +55,7 @@ Background Reading: [background_reading/](./background_reading/)
 
 ### Domain Overview:
 
-This project intersects with machine learning, social science, and information systems. Recommender systems are part of everyday life at this point, with every major company deploying it in some sense. Every major platform such as Netflix, TikTok, Spotify,etc. uses them to decide what content users see next. The main underlying mechanism is already understood, as the filtering computes recommendations based off the user's interactions and history. By doing so, the algorithm ranks unseen items by predicting their relevance. The societal problem has also been noted down in many papers, such as https://pubs.aeaweb.org/doi/pdfplus/10.1257/aer.20191777. With optimization for short term engagement (clicks, watch time, likes) prioritized, the creation of feedback loops progressively limit down on a narrow subset of a user's interests. At the sheer scale of social media's reach, millions of individual feedback loops can compound into measurable shifts in political polarization, media consumption patterns, and health behaviors.
+This project intersects with machine learning, social science, and information systems. Recommender systems are part of everyday life at this point, with every major company deploying it in some sense. Every major platform such as Netflix, TikTok, Spotify,etc. uses them to decide what content users see next. The main underlying mechanism is already understood, as the filtering computes recommendations based off the user's interactions and history. By doing so, the algorithm ranks unseen items by predicting their relevance. The societal problem has also been noted down in many papers, such as (Levy, 2021). With optimization for short term engagement (clicks, watch time, likes) prioritized, the creation of feedback loops progressively limit down on a narrow subset of a user's interests. At the sheer scale of social media's reach, millions of individual feedback loops can compound into measurable shifts in political polarization, media consumption patterns, and health behaviors.
 
 ### Background Reading
 
@@ -71,7 +73,7 @@ This project intersects with machine learning, social science, and information s
 
 ### Provenance
 
-The dataset is the MovieLens 100K Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user actiivity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at [https://grouplens.org/datasets/movielens/100k/](https://grouplens.org/datasets/movielens/100k/). The data was downloaded as a zip archive and then unizpped/extracted into four .csv files representing a normalized relational schema: ratings, movies, users, and genres. 
+The dataset is the MovieLens 1M Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user actiivity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at [https://grouplens.org/datasets/movielens/100k/](https://grouplens.org/datasets/movielens/100k/). he 1M genre data was stored as pipe-separated strings and parsed into the same 18 binary flag columns as the 100K movies table for cross-dataset consistency. The data was downloaded as a zip archive and then unizpped/extracted into seven .csv files across two datasets, representing a normalized relational schema.
 
 ### Code
 
@@ -94,7 +96,7 @@ The choice of using the MovieLens 100K dataset was because the dataset provides 
 
 The MovieLens files embed genre information as 19 binary flag columns directly on the movies table. Extracting genres into a separate lookup table (`genre.csv`) normalizes the schema to 3NF, eliminates redundancy, and allows SQL joins that are more expressive for genre based diversity queries. 
 
-Using `u.data` over train/test splits allows for better accuracy benchmarking. The pre split files of `u1.base` and `u1.test` allows us to better measure diversity dynamics instead of prediction accuracy, with the full `u.data` file used to maximize coverage of the user item space. 
+The pre-split files (`u1.base`, `u1.test`) are designed for accuracy benchmarking. Since this project measures diversity dynamics rather than prediction accuracy, the full `u.data` file is used instead to maximize coverage of the user-item space.
 
 The choice to exclude the `unknown` genre flag is done so because the flag is set to 1 for only 2 of the 1,682 movies. Since its a negligible amount of signal, it is dropped from the genre based similarity computations. 
 
@@ -104,34 +106,50 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 
 ### Schema: ER Diagram (Logical Level)
 
-```
-┌──────────────┐         ┌──────────────────────────────────┐         ┌───────────────────┐
-│    users     │         │            ratings               │         │      movies       │
-├──────────────┤         ├──────────────────────────────────┤         ├───────────────────┤
-│ PK userId    │───────< │ PK/FK  userId    INTEGER         │ >───────│ PK movieId        │
-│    age       │         │ PK/FK  movieId   INTEGER         │         │    title          │
-│    gender    │         │        rating    INTEGER (1–5)   │         │    release_date   │
-│    occupation│         │        timestamp INTEGER (Unix)  │         │    [18 genre cols]│
-│    zip       │         └──────────────────────────────────┘         └────────┬──────────┘
-└──────────────┘                                                                │ genre flags reference
-                                                                       ┌────────┴──────────┐
-                                                                       │      genres       │
-                                                                       ├───────────────────┤
-                                                                       │ PK genreId        │
-                                                                       │    genreName      │
-                                                                       └───────────────────┘
-```
+── MovieLens 100K ──────────────────────────────────────────────────────────────
 
-*Primary keys: `users.userId`, `movies.movieId`, `genres.genreId`, composite (`userId`, `movieId`) in `ratings`.*
+┌──────────────┐     ┌─────────────────────────────────┐     ┌────────────────┐
+│    users     │     │           ratings               │     │    movies      │
+├──────────────┤     ├─────────────────────────────────┤     ├────────────────┤
+│ PK userId    │───< │ PK/FK userId   INTEGER          │ >───│ PK movieId     │
+│    age       │     │ PK/FK movieId  INTEGER          │     │    title       │
+│    gender    │     │       rating   INTEGER (1–5)    │     │    release_date│
+│    occupation│     │       timestamp INTEGER (Unix)  │     │ [18 genre cols]│
+│    zip       │     └─────────────────────────────────┘     └───────┬────────┘
+└──────────────┘                                                      │
+                                                             ┌────────┴────────┐
+── Shared Lookup ─────────────────────────────────────────  │     genres      │
+                                                             ├─────────────────┤
+                                                             │ PK genreId      │
+                                                             │    genreName    │
+                                                             └────────┬────────┘
+                                                                      │
+── MovieLens 1M ────────────────────────────────────────────          │
+
+┌──────────────┐     ┌─────────────────────────────────┐     ┌───────┴────────┐
+│   users_1m   │     │          ratings_1m             │     │   movies_1m    │
+├──────────────┤     ├─────────────────────────────────┤     ├────────────────┤
+│ PK userId    │───< │ PK/FK userId   INTEGER          │ >───│ PK movieId     │
+│    gender    │     │ PK/FK movieId  INTEGER          │     │    title       │
+│    age       │     │       rating   INTEGER (1–5)    │     │    release_date│
+│    occupation│     │       timestamp INTEGER (Unix)  │     │ [18 genre cols]│
+│    zip       │     └─────────────────────────────────┘     └────────────────┘
+└──────────────┘
+
+---
 
 ### Data Table
 
+
 | Table | Description | Link |
 |---|---|---|
-| ratings | 100,000 explicit ratings (1–5 stars) from 943 users on 1,682 movies with Unix timestamps. | [ratings.csv](./data/ratings.csv) |
-| movies | Metadata for 1,682 movies: title, release date, and 18 binary genre indicator columns. | [movies.csv](./data/movies.csv) |
-| users | Demographic data for 943 users: age, gender, occupation, zip code. | [users.csv](./data/users.csv) |
-| genres | Lookup table mapping genreId (integer) to genreName (string) for the 18 valid genres. | [genres.csv](./data/genres.csv) |
+| ratings | 100,000 explicit ratings (1–5 stars) from 943 users on 1,682 movies with Unix timestamps. (MovieLens 100K) | [ratings.csv](./data/ratings.csv) |
+| movies | Metadata for 1,682 movies: title, release date, and 18 binary genre columns. (MovieLens 100K) | [movies.csv](./data/movies.csv) |
+| users | Demographic data for 943 users: age, gender, occupation, zip code. (MovieLens 100K) | [users.csv](./data/users.csv) |
+| genres | Shared lookup table mapping genreId to genreName for the 18 valid genres. | [genres.csv](./data/genres.csv) |
+| ratings_1m | 1,000,209 explicit ratings (1–5 stars) from 6,040 users on 3,883 movies. (MovieLens 1M) | [ratings_1m.csv](./data/ratings_1m.csv) |
+| movies_1m | Metadata for 3,883 movies with same 18 binary genre columns as movies table. (MovieLens 1M) | [movies_1m.csv](./data/movies_1m.csv) |
+| users_1m | Demographic data for 6,040 users: gender, age, occupation, zip. (MovieLens 1M) | [users_1m.csv](./data/users_1m.csv) |
 
 ### Data Dictionary
 
