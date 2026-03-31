@@ -5,18 +5,24 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 
 
 **Name:** Yuthi Madireddy
+
 **Computing ID:** hva4zb
+
 **DOI:**
+
 **License:** MIT — see [LICENSE](./LICENSE)
 
+---
+
 ## Links:
-Data (One_Drive Link): https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge
-Data (Github Link): [data/](./data/)
+**Data (One_Drive Link):** [https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge]
+
+**Data (Github Link)**: [data/](./data/)
 Pipeline: [pipeline/pipeline.ipynb](./pipeline/pipeline.ipynb)
 
-Press Release: [press_release.md](./press_release.md)
+**Press Release:** [press_release.md](./press_release.md)
 
-Background Reading: [background_reading/](./background_reading/)
+**Background Reading:** [background_reading/](./background_reading/)
 
 ## Problem Definition:
 
