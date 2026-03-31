@@ -112,35 +112,8 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 
 ### Schema: ER Diagram (Logical Level)
 
-── MovieLens 100K ──────────────────────────────────────────────────────────────
+![ERD Diagram[(ERD.png)]
 
-┌──────────────┐     ┌─────────────────────────────────┐     ┌────────────────┐
-│    users     │     │           ratings               │     │    movies      │
-├──────────────┤     ├─────────────────────────────────┤     ├────────────────┤
-│ PK userId    │───< │ PK/FK userId   INTEGER          │ >───│ PK movieId     │
-│    age       │     │ PK/FK movieId  INTEGER          │     │    title       │
-│    gender    │     │       rating   INTEGER (1–5)    │     │    release_date│
-│    occupation│     │       timestamp INTEGER (Unix)  │     │ [18 genre cols]│
-│    zip       │     └─────────────────────────────────┘     └───────┬────────┘
-└──────────────┘                                                      │
-                                                             ┌────────┴────────┐
-── Shared Lookup ─────────────────────────────────────────  │     genres      │
-                                                             ├─────────────────┤
-                                                             │ PK genreId      │
-                                                             │    genreName    │
-                                                             └────────┬────────┘
-                                                                      │
-── MovieLens 1M ────────────────────────────────────────────          │
-
-┌──────────────┐     ┌─────────────────────────────────┐     ┌───────┴────────┐
-│   users_1m   │     │          ratings_1m             │     │   movies_1m    │
-├──────────────┤     ├─────────────────────────────────┤     ├────────────────┤
-│ PK userId    │───< │ PK/FK userId   INTEGER          │ >───│ PK movieId     │
-│    gender    │     │ PK/FK movieId  INTEGER          │     │    title       │
-│    age       │     │       rating   INTEGER (1–5)    │     │    release_date│
-│    occupation│     │       timestamp INTEGER (Unix)  │     │ [18 genre cols]│
-│    zip       │     └─────────────────────────────────┘     └────────────────┘
-└──────────────┘
 
 ---
 
