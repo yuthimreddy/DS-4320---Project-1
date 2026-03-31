@@ -1,4 +1,8 @@
-# DS 4320 Project 1:
+# DS 4320 Project 1: Breaking the Filter Bubble, A Diversity-Aware Movie Recommendation System
+
+## Executive Summary
+
+This repository contains materials necessary for running DS 4320 Project 1. The project addresses the problem of filter bubbles in content recommendation systems, which is the tendency of algorithms to progressively narrow the diversity of content shown to users over repeated recommendation cycles. Using the MovieLens 100K dataset, the project builds a four-table relational database (ratings, movies, users, genres), implements a user based collaborative filtering recommender system in Python with DuckDB for data management, evaluates a MMR diversity of re-ranking layer that measurably reduces filter bubble formation while preserving recommendation quality. The pipeline shows that a lightweight post processing diversity intervention can reduce content narrowing without rebuilding the underlying algorithm from scratch. 
 
 **Name:** Yuthi Madireddy
 **Computing ID:** hva4zb
