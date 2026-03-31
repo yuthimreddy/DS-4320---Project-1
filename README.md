@@ -24,7 +24,7 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 
 **Press Release:** [press_release.md](./press_release.md)
 
-**Background Reading:** [background_reading/](./background_reading/)
+**Background Reading:** [background_reading/](./background_readings)
 
 ## Problem Definition:
 
