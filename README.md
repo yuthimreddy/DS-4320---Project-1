@@ -9,7 +9,12 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 **DOI:**
 **License:**
 
+## Links:
+Data (One_Drive Link): https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge
 
+Press Release: [press_release.md](./press_release.md)
+
+Background Reading: [background_reading/](./background_reading/)
 
 ## Problem Definition:
 
