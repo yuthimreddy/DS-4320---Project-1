@@ -295,3 +295,15 @@
 2026-03-31 15:59:40,002 | INFO |   User 50...
 2026-03-31 15:59:46,640 | INFO | Simulation complete.
 2026-03-31 16:11:19,059 | INFO | Pipeline finished.
+2026-03-31 16:15:53,820 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:16:02,456 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:17:03,465 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:17:19,182 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:17:30,277 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:17:51,016 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:17:57,302 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:18:10,311 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:18:18,551 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:19:22,731 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:19:31,891 | INFO | Chart saved to pipeline/filter_bubble_chart.png
+2026-03-31 16:21:35,923 | INFO | Both charts saved.
