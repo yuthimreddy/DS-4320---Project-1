@@ -1,8 +1,8 @@
 # DS 4320 Project 1: Breaking the Filter Bubble, A Diversity-Aware Movie Recommendation System
 
 ## Executive Summary
-This repository contains materials necessary for running DS 4320 Project 1. The project addresses the problem of filter bubbles in content recommendation systems, which is the tendency of algorithms to progressively narrow the diversity of content shown to users over repeated recommendation cycles. Using both the MovieLens 100K and MovieLens 1M datasets, the project builds a seven-table relational database (ratings, movies, users, genres, ratings_1m, movies_1m, users_1m), implements a user based collaborative filtering recommender system in Python with DuckDB for data management, evaluates a MMR diversity of re-ranking layer that measurably reduces filter bubble formation while preserving recommendation quality. The pipeline shows that a lightweight post processing diversity intervention can reduce content narrowing without rebuilding the underlying algorithm from scratch. 
 
+This repository contains materials necessary for running DS 4320 Project 1. The project addresses the problem of filter bubbles in content recommendation systems, which is the tendency of algorithms to progressively narrow the diversity of content shown to users over repeated recommendation cycles. Using both the MovieLens 100K and MovieLens 1M datasets, the project builds a seven-table relational database (ratings, movies, users, genres, ratings_1m, movies_1m, users_1m), implements a user based collaborative filtering recommender system in Python with DuckDB for data management, evaluates a MMR diversity of re-ranking layer that measurably reduces filter bubble formation while preserving recommendation quality. The pipeline shows that a lightweight post processing diversity intervention can reduce content narrowing without rebuilding the underlying algorithm from scratch.
 
 **Name:** Yuthi Madireddy
 
@@ -12,13 +12,15 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 
 **License:** MIT — see [LICENSE](./LICENSE)
 
----
+------------------------------------------------------------------------
 
 ## Links:
-**Data (One_Drive Link):** [https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge]
+
+**Data (One_Drive Link):** [UVA - One Drive Data Location](https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge)
 
 **Data (Github Link)**: [data/](./data/)
-Pipeline: [pipeline/pipeline.ipynb](./pipeline/pipeline.ipynb)
+
+**Pipeline:** [pipeline/pipeline.ipynb](./pipeline/pipeline.ipynb)
 
 **Press Release:** [press_release.md](./press_release.md)
 
@@ -34,20 +36,18 @@ Pipeline: [pipeline/pipeline.ipynb](./pipeline/pipeline.ipynb)
 
 **Motivation:** Recommendation algorithms decide what media billions of people watch, read, and engage with everyday. When these systems are designed for short term engagement optimization rather than informational material, the downstream effects have already been recorded: increased political polarization, susceptibility to misinformation, and echo chambers. The scale of this problem makes data driven tools helpful for measuring when and how these filter bubbles form, and under what conditions they can be interrupted which is a strong step towards designing healthier recommendation systems.
 
-
-
 **Press Release Headline:**
 
 [Breaking the Loop: A New Approach to Content Recommendation Tones Down the Filter Bubble WITHOUT Ruining Your Feed](./press_release.md)
 
----
+------------------------------------------------------------------------
 
 ## Domain Exposition
 
-### Terminology: 
+### Terminology:
 
 | Term / KPI | Definition |
-|---|---|
+|------------------------------------|------------------------------------|
 | **Recommender System (RS)** | An algorithm that predicts items a user will find relevant based on past behavior, ratings, or user similarity. |
 | **Collaborative Filtering (CF)** | A family of RS methods that generate recommendations based on the preferences of similar users (user-based) or similar items (item-based). |
 | **Filter Bubble** | A state in which a user is algorithmically exposed only to content that aligns with prior preferences, limiting viewpoint diversity (Pariser, 2011). |
@@ -65,28 +65,27 @@ This project intersects with machine learning, social science, and information s
 
 ### Background Reading
 
-| # | Title | Brief Description | Link |
-|---|---|---|---|
-| 1 | Trap of Social Media Algorithms: A Systematic Review on Filter Bubbles, Echo Chambers, and Their Impact on Youth (MDPI, 2025) | Reviews 30 studies (2015–2025) on how algorithms create ideological homogeneity; finds consistent evidence that algorithmic systems amplify selective exposure, especially for younger users. | [PDF](./background_reading/paper1_mdpi_filter_bubbles_youth.pdf) |
-| 2 | Understanding Echo Chambers in Recommender Systems (IJACSA, 2025) | A systematic literature review on how collaborative filtering and content-based systems mechanically produce echo chambers; surveys detection and mitigation methods. | [PDF](./background_reading/paper2_ijacsa_echo_chambers_rs.pdf) |
-| 3 | Filter Bubbles in Recommender Systems: Fact or Fallacy (arXiv, 2023) | Surveys the empirical literature and classifies studies by whether they found filter bubble evidence; identifies methodological causes of disagreement. | [PDF](./background_reading/paper3_arxiv_fact_or_fallacy.pdf) |
-| 4 | Understanding Echo Chambers and Filter Bubbles (MIS Quarterly / Darden UVA, 2020) | Empirical study using Twitter data examining the relative contribution of algorithmic filtering vs. user choice in producing filter bubbles. | [PDF](./background_reading/paper4_darden_uva_filter_bubbles.pdf) |
-| 5 | Algorithmic Domination and Democratic Discourse (MDPI, 2025) | Examines how disinformation, echo chambers, and filter bubbles threaten democratic institutions; proposes platform regulation and media literacy interventions. | [PDF](./background_reading/paper5_mdpi_algorithmic_domination.pdf) |
+| \# | Title | Brief Description | Link |
+|------------------|------------------|------------------|------------------|
+| 1 | Trap of Social Media Algorithms: A Systematic Review on Filter Bubbles, Echo Chambers, and Their Impact on Youth (MDPI, 2025) | Reviews 30 studies (2015–2025) on how algorithms create ideological homogeneity; finds consistent evidence that algorithmic systems amplify selective exposure, especially for younger users. | [PDF](./background_readings/societies-15-00301.pdf) |
+| 2 | Understanding Echo Chambers in Recommender Systems (IJACSA, 2025) | A systematic literature review on how collaborative filtering and content based systems mechanically produce echo chambers; surveys detection and mitigation methods. | [PDF](./background_readings/Paper_2-Understanding_Echo_Chambers_in_Recommender_Systems.pdf) |
+| 3 | Filter Bubbles in Recommender Systems: Fact or Fallacy (arXiv, 2023) | Surveys the empirical literature and classifies studies by whether they found filter bubble evidence; identifies methodological causes of disagreement. | [PDF](./background_readings/3paper.pdf) |
+| 4 | Understanding Echo Chambers and Filter Bubbles (MIS Quarterly / Darden UVA, 2020) | Empirical study using Twitter data examining the relative contribution of algorithmic filtering vs. user choice in producing filter bubbles. | [PDF](./background_readings/4KitchensJohnsonGray Final_0.pdf) |
+| 5 | Algorithmic Domination in the Modern Republic (MDPI, 2025) | Examines how disinformation, echo chambers, and filter bubbles threaten democratic institutions, proposes platform regulation and media literacy interventions. | [PDF](./background_readings/5socsci-14-00391.pdf) |
 
----
+------------------------------------------------------------------------
 
 ## Data Creation
 
 ### Provenance
 
-The dataset is the MovieLens 1M Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user actiivity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at [https://grouplens.org/datasets/movielens/100k/](https://grouplens.org/datasets/movielens/100k/). he 1M genre data was stored as pipe-separated strings and parsed into the same 18 binary flag columns as the 100K movies table for cross-dataset consistency. The data was downloaded as a zip archive and then unizpped/extracted into seven .csv files across two datasets, representing a normalized relational schema.
+The dataset is the MovieLens 1M Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user activity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at <https://grouplens.org/datasets/movielens/100k/>. he 1M genre data was stored as pipe-separated strings and parsed into the same 18 binary flag columns as the 100K movies table for cross-dataset consistency. The data was downloaded as a zip archive and then unizpped/extracted into seven .csv files across two datasets, representing a normalized relational schema.
 
 ### Code
 
 | File | Description | Link |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | `pipeline/pipeline.ipynb` | Loads all four CSVs into DuckDB, runs SQL queries to prepare the recommendation dataset, implements user-based collaborative filtering, applies MMR diversity re-ranking, computes ILD across recommendation cycles, trains a classification model, and visualizes results. | [pipeline.ipynb](./pipeline/pipeline.ipynb) |
-
 
 ### Bias Identification
 
@@ -98,30 +97,28 @@ Demographic bias can be partially addressed by stratifying our analysis by gende
 
 ### Rationale for Critical Decisions
 
-The choice of using the MovieLens 100K dataset was because the dataset provides a sufficient level of scale for collaborative filtering (100,000 ratings) while remaining sizable enough for computations in a notebook environment. 
+The choice of using the MovieLens 100K dataset was because the dataset provides a sufficient level of scale for collaborative filtering (100,000 ratings) while remaining sizable enough for computations in a notebook environment.
 
-The MovieLens files embed genre information as 19 binary flag columns directly on the movies table. Extracting genres into a separate lookup table (`genre.csv`) normalizes the schema to 3NF, eliminates redundancy, and allows SQL joins that are more expressive for genre based diversity queries. 
+The MovieLens files embed genre information as 19 binary flag columns directly on the movies table. Extracting genres into a separate lookup table (`genre.csv`) normalizes the schema to 3NF, eliminates redundancy, and allows SQL joins that are more expressive for genre based diversity queries.
 
 The pre-split files (`u1.base`, `u1.test`) are designed for accuracy benchmarking. Since this project measures diversity dynamics rather than prediction accuracy, the full `u.data` file is used instead to maximize coverage of the user-item space.
 
-The choice to exclude the `unknown` genre flag is done so because the flag is set to 1 for only 2 of the 1,682 movies. Since its a negligible amount of signal, it is dropped from the genre based similarity computations. 
+The choice to exclude the `unknown` genre flag is done so because the flag is set to 1 for only 2 of the 1,682 movies. Since its a negligible amount of signal, it is dropped from the genre based similarity computations.
 
----
+------------------------------------------------------------------------
 
 ## Metadata
 
 ### Schema: ER Diagram (Logical Level)
 
-![ERD Diagram[(ERD.png)]
+![ERD Diagram at the Logical Level](ERD.png)
 
-
----
+------------------------------------------------------------------------
 
 ### Data Table
 
-
 | Table | Description | Link |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | ratings | 100,000 explicit ratings (1–5 stars) from 943 users on 1,682 movies with Unix timestamps. (MovieLens 100K) | [ratings.csv](./data/ratings.csv) |
 | movies | Metadata for 1,682 movies: title, release date, and 18 binary genre columns. (MovieLens 100K) | [movies.csv](./data/movies.csv) |
 | users | Demographic data for 943 users: age, gender, occupation, zip code. (MovieLens 100K) | [users.csv](./data/users.csv) |
@@ -134,17 +131,17 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 
 **Ratings**
 
-| Name | Data Type | Description | Example |
-|---|---|---|---|
-| userId | INTEGER | Unique user identifier (1–943) | `196` |
-| movieId | INTEGER | Unique movie identifier (1–1682) | `242` |
-| rating | INTEGER | Explicit star rating, scale 1–5 | `3` |
-| timestamp | INTEGER | Unix timestamp of rating submission | `881250949` |
+| Name      | Data Type | Description                         | Example     |
+|-----------|-----------|-------------------------------------|-------------|
+| userId    | INTEGER   | Unique user identifier (1–943)      | `196`       |
+| movieId   | INTEGER   | Unique movie identifier (1–1682)    | `242`       |
+| rating    | INTEGER   | Explicit star rating, scale 1–5     | `3`         |
+| timestamp | INTEGER   | Unix timestamp of rating submission | `881250949` |
 
 **Movies**
 
 | Name | Data Type | Description | Example |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | movieId | INTEGER | Unique movie identifier, PK | `1` |
 | title | TEXT | Movie title with release year | `Toy Story (1995)` |
 | release_date | TEXT | Release date string | `01-Jan-1995` |
@@ -153,7 +150,7 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 **Users**
 
 | Name | Data Type | Description | Example |
-|---|---|---|---|
+|----|----|----|----|
 | userId | INTEGER | Unique user identifier, PK | `1` |
 | age | INTEGER | User age in years (self-reported) | `24` |
 | gender | TEXT | Self-reported gender: M or F | `M` |
@@ -162,17 +159,17 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 
 **genres**
 
-| Name | Data Type | Description | Example |
-|---|---|---|---|
-| genreId | INTEGER | Numeric genre identifier (1–18), PK | `1` |
-| genreName | TEXT | Human-readable genre label | `Action` |
+| Name      | Data Type | Description                         | Example  |
+|-----------|-----------|-------------------------------------|----------|
+| genreId   | INTEGER   | Numeric genre identifier (1–18), PK | `1`      |
+| genreName | TEXT      | Human-readable genre label          | `Action` |
 
 ### Data Dictionary: Uncertainty Quantification
 
 **Ratings Table**
 
 | Feature | Min | Max | Mean | Std Dev | Median | Notes |
-|---|---|---|---|---|---|---|
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
 | userId | 1 | 943 | 462.5 | 266.6 | 447 | Identifier — no analytic uncertainty. |
 | movieId | 1 | 1682 | 425.5 | 330.8 | 322 | Distribution skews toward lower IDs (more popular/older films receive more ratings). |
 | rating | 1 | 5 | 3.53 | 1.13 | 4 | Ordinal; treated as continuous for modeling. Scale-use bias inflates mean — some users never rate below 3. |
@@ -181,12 +178,12 @@ The choice to exclude the `unknown` genre flag is done so because the flag is se
 **Users Table**
 
 | Feature | Min | Max | Mean | Std Dev | Median | Notes |
-|---|---|---|---|---|---|---|
+|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
 | age | 7 | 73 | 34.1 | 12.2 | 31 | Self-reported; not validated. Minimum of 7 raises data entry questions. |
 
 **Genres Table**
 
 | Feature | Notes |
-|---|---|
+|------------------------------------|------------------------------------|
 | genreId | Integer identifier 1–18; deterministic mapping, no uncertainty. |
 | genreName | String labels assigned by MovieLens curators. Genre boundary decisions are subjective (e.g., what separates Thriller from Horror) but consistent within the dataset. |
