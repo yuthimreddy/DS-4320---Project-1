@@ -79,7 +79,7 @@ This project intersects with machine learning, social science, and information s
 
 ### Provenance
 
-The dataset is the MovieLens 1M Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user activity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at <https://grouplens.org/datasets/movielens/100k/>. he 1M genre data was stored as pipe-separated strings and parsed into the same 18 binary flag columns as the 100K movies table for cross-dataset consistency. The data was downloaded as a zip archive and then unizpped/extracted into seven .csv files across two datasets, representing a normalized relational schema.
+The dataset is the MovieLens 1M Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user activity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at <https://grouplens.org/datasets/movielens/100k/>. The 1M genre data was stored as pipe-separated strings and parsed into the same 18 binary flag columns as the 100K movies table for cross-dataset consistency. The data was downloaded as a zip archive and then unizpped/extracted into seven .csv files across two datasets, representing a normalized relational schema.
 
 ### Code
 
@@ -97,7 +97,7 @@ Demographic bias can be partially addressed by stratifying our analysis by gende
 
 ### Rationale for Critical Decisions
 
-The choice of using the MovieLens 100K dataset was because the dataset provides a sufficient level of scale for collaborative filtering (100,000 ratings) while remaining sizable enough for computations in a notebook environment.
+The choice of using the MovieLens 100K and the 1M datasets together was because both datasets provides a sufficient level of scale for collaborative filtering while remaining sizable enough for computations in a notebook environment.
 
 The MovieLens files embed genre information as 19 binary flag columns directly on the movies table. Extracting genres into a separate lookup table (`genre.csv`) normalizes the schema to 3NF, eliminates redundancy, and allows SQL joins that are more expressive for genre based diversity queries.
 
