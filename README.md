@@ -57,3 +57,130 @@ This project intersects with machine learning, social science, and information s
 | 5 | Algorithmic Domination and Democratic Discourse (MDPI, 2025) | Examines how disinformation, echo chambers, and filter bubbles threaten democratic institutions; proposes platform regulation and media literacy interventions. | [PDF](./background_reading/paper5_mdpi_algorithmic_domination.pdf) |
 
 ---
+
+## Data Creation
+
+### Provenance
+
+The dataset is the MovieLens 100K Benchmark, which is collected and maintained by the GroupLens Research Lab at the University of Minnesota. The data was compiled from user actiivity on the MovieLens movie recommendation platform between September 1997 and April 1998, and released as a benchmark dataset in 1998. The dataset is free for public use at [https://grouplens.org/datasets/movielens/100k/](https://grouplens.org/datasets/movielens/100k/). The data was downloaded as a zip archive and then unizpped/extracted into four .csv files representing a normalized relational schema: ratings, movies, users, and genres. 
+
+### Code
+
+| File | Description | Link |
+|---|---|---|
+| `pipeline/pipeline.ipynb` | Loads all four CSVs into DuckDB, runs SQL queries to prepare the recommendation dataset, implements user-based collaborative filtering, applies MMR diversity re-ranking, computes ILD across recommendation cycles, trains a classification model, and visualizes results. | [pipeline.ipynb](./pipeline/pipeline.ipynb) |
+
+
+### Bias Identification
+
+The MovieLens 100K dataset contains several important biases. The data was collected through a voluntary sampling design, meaning that we have selection bias. Those who volunteered to participate are likely to be more inclined towards cinema and movies in general, compared to a random individual selected. As a result, there is a skew away from casual viewers. Another bias to note is the demographic of our respondents. The large majority (71%) of users are male, and the age and occupation distributions are also not representative of the general population. Moreover, there is the issue of popularity bias which is the fact that well-known films have much more ratings than obscure ones, which makes the recommendation signal much stronger for a popular titles. Lastly, the temporal bias is that all the ratings were collected in a seven month window between 1997-1998, so the movie reviews are limited to the genre trends and cultural context from that single time period.
+
+### Bias Mitigation:
+
+Demographic bias can be partially addressed by stratifying our analysis by gender or age group to check if the diversity decay patterns differ across different user segments. Popularity bias can be mitigated by including long tail films in the candidate pool when generating recommendations rather than drawing only from the highest rated titles, which is directly relevant to the main goal of the project's diversity re-ranking goal. Temporal bias can not be avoided here since we are using a static dataset, meaning the dataset is not updated with additional records as time goes on. Instead, temporal bias is acknowledged as a main limitation for the project with our simulated filter bubble dynamics being described as illustrative simulations and not used to make claims about modern systems.
+
+### Rationale for Critical Decisions
+
+The choice of using the MovieLens 100K dataset was because the dataset provides a sufficient level of scale for collaborative filtering (100,000 ratings) while remaining sizable enough for computations in a notebook environment. 
+
+The MovieLens files embed genre information as 19 binary flag columns directly on the movies table. Extracting genres into a separate lookup table (`genre.csv`) normalizes the schema to 3NF, eliminates redundancy, and allows SQL joins that are more expressive for genre based diversity queries. 
+
+Using `u.data` over train/test splits allows for better accuracy benchmarking. The pre split files of `u1.base` and `u1.test` allows us to better measure diversity dynamics instead of prediction accuracy, with the full `u.data` file used to maximize coverage of the user item space. 
+
+The choice to exclude the `unknown` genre flag is done so because the flag is set to 1 for only 2 of the 1,682 movies. Since its a negligible amount of signal, it is dropped from the genre based similarity computations. 
+
+---
+
+## Metadata
+
+### Schema: ER Diagram (Logical Level)
+
+```
+┌──────────────┐         ┌──────────────────────────────────┐         ┌───────────────────┐
+│    users     │         │            ratings               │         │      movies       │
+├──────────────┤         ├──────────────────────────────────┤         ├───────────────────┤
+│ PK userId    │───────< │ PK/FK  userId    INTEGER         │ >───────│ PK movieId        │
+│    age       │         │ PK/FK  movieId   INTEGER         │         │    title          │
+│    gender    │         │        rating    INTEGER (1–5)   │         │    release_date   │
+│    occupation│         │        timestamp INTEGER (Unix)  │         │    [18 genre cols]│
+│    zip       │         └──────────────────────────────────┘         └────────┬──────────┘
+└──────────────┘                                                                │ genre flags reference
+                                                                       ┌────────┴──────────┐
+                                                                       │      genres       │
+                                                                       ├───────────────────┤
+                                                                       │ PK genreId        │
+                                                                       │    genreName      │
+                                                                       └───────────────────┘
+```
+
+*Primary keys: `users.userId`, `movies.movieId`, `genres.genreId`, composite (`userId`, `movieId`) in `ratings`.*
+
+### Data Table
+
+| Table | Description | Link |
+|---|---|---|
+| ratings | 100,000 explicit ratings (1–5 stars) from 943 users on 1,682 movies with Unix timestamps. | [ratings.csv](./data/ratings.csv) |
+| movies | Metadata for 1,682 movies: title, release date, and 18 binary genre indicator columns. | [movies.csv](./data/movies.csv) |
+| users | Demographic data for 943 users: age, gender, occupation, zip code. | [users.csv](./data/users.csv) |
+| genres | Lookup table mapping genreId (integer) to genreName (string) for the 18 valid genres. | [genres.csv](./data/genres.csv) |
+
+### Data Dictionary
+
+**Ratings**
+
+| Name | Data Type | Description | Example |
+|---|---|---|---|
+| userId | INTEGER | Unique user identifier (1–943) | `196` |
+| movieId | INTEGER | Unique movie identifier (1–1682) | `242` |
+| rating | INTEGER | Explicit star rating, scale 1–5 | `3` |
+| timestamp | INTEGER | Unix timestamp of rating submission | `881250949` |
+
+**Movies**
+
+| Name | Data Type | Description | Example |
+|---|---|---|---|
+| movieId | INTEGER | Unique movie identifier, PK | `1` |
+| title | TEXT | Movie title with release year | `Toy Story (1995)` |
+| release_date | TEXT | Release date string | `01-Jan-1995` |
+| Action…Western | INTEGER (binary) | 18 genre flag columns; 1 if movie belongs to genre | `1` or `0` |
+
+**Users**
+
+| Name | Data Type | Description | Example |
+|---|---|---|---|
+| userId | INTEGER | Unique user identifier, PK | `1` |
+| age | INTEGER | User age in years (self-reported) | `24` |
+| gender | TEXT | Self-reported gender: M or F | `M` |
+| occupation | TEXT | Self-reported occupation category | `technician` |
+| zip | TEXT | US zip code (text to preserve leading zeros) | `85711` |
+
+**genres**
+
+| Name | Data Type | Description | Example |
+|---|---|---|---|
+| genreId | INTEGER | Numeric genre identifier (1–18), PK | `1` |
+| genreName | TEXT | Human-readable genre label | `Action` |
+
+### Data Dictionary: Uncertainty Quantification
+
+**Ratings Table**
+
+| Feature | Min | Max | Mean | Std Dev | Median | Notes |
+|---|---|---|---|---|---|---|
+| userId | 1 | 943 | 462.5 | 266.6 | 447 | Identifier — no analytic uncertainty. |
+| movieId | 1 | 1682 | 425.5 | 330.8 | 322 | Distribution skews toward lower IDs (more popular/older films receive more ratings). |
+| rating | 1 | 5 | 3.53 | 1.13 | 4 | Ordinal; treated as continuous for modeling. Scale-use bias inflates mean — some users never rate below 3. |
+| timestamp | 874724710 | 893286638 | 883528900 | 5.34×10⁶ | 882826900 | Unix seconds. Rating behavior is episodic (users rate in sessions), so timestamps are not independent. |
+
+**Users Table**
+
+| Feature | Min | Max | Mean | Std Dev | Median | Notes |
+|---|---|---|---|---|---|---|
+| age | 7 | 73 | 34.1 | 12.2 | 31 | Self-reported; not validated. Minimum of 7 raises data entry questions. |
+
+**Genres Table**
+
+| Feature | Notes |
+|---|---|
+| genreId | Integer identifier 1–18; deterministic mapping, no uncertainty. |
+| genreName | String labels assigned by MovieLens curators. Genre boundary decisions are subjective (e.g., what separates Thriller from Horror) but consistent within the dataset. |
