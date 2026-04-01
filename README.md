@@ -8,7 +8,7 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 
 **Computing ID:** hva4zb
 
-**DOI:**
+**DOI:** https://doi.org/10.5281/zenodo.19362629
 
 **License:** MIT — see [LICENSE](./LICENSE)
 
