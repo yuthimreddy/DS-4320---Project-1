@@ -16,7 +16,7 @@ This repository contains materials necessary for running DS 4320 Project 1. The 
 
 ## Links:
 
-**Data (One_Drive Link):** [UVA - One Drive Data Location](https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAWr_7hC05cuXCIxHAml5Bdc?e=mUTqge)
+**Data (One_Drive Link):** [UVA - One Drive Data Location](https://myuva-my.sharepoint.com/:f:/g/personal/hva4zb_virginia_edu/IgAsZDhl7hqQSoWNQmeGtv3FAbk4gE_06YH47lJ0Cp7l90w?e=cTHdVc)
 
 **Data (Github Link)**: [data/](./data/)
 

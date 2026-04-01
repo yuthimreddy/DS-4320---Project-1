@@ -22,6 +22,6 @@ The end goal is to not fully diminish or disregard the recommendations algorithm
 
 ## Chart
 
-![Filter Bubble Simulation: Standard CF vs. Diversity-Aware Re-Ranking](./pipeline/pipeline/ild_chart.png)
+![Filter Bubble Simulation: Standard CF vs. Diversity-Aware Re-Ranking](pipeline/ild_chart.png)
 
-*The chart above shows Intra-List Diversity (ILD) - a measure of how varied your recommendation list is across 25 simulated viewing sessions. The red line shows diversity declining steadily under a standard recommendation algorithm. The blue line shows the same metric when the diversity re-ranking layer is active. The green shaded area represents the diversity you gain from the intervention. Across all sessions, the diversity layer consistently produces a more genre-varied feed than the unchecked algorithm.*
+*The chart above shows Intra-List Diversity (ILD) - a measure of how varied your recommendation list is across 25 simulated viewing sessions. The red line shows diversity under a standard recommendation algorithm. The blue line shows the same metric when the diversity re-ranking layer is active. The green shaded area represents the diversity you gain from the intervention. Across all sessions, the diversity layer consistently produces a more genre-varied feed than the unchecked algorithm.*
